@@ -1,0 +1,31 @@
+resources:
+- repo: self
+queue:
+  name: Hosted Linux Preview
+  demands: npm
+
+
+steps:
+- task: Npm@1
+  inputs:
+    command: install
+    verbose: false
+
+- task: Npm@1
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run lint'
+
+- task: Npm@1
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: 'run build'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: './dist'
+    ArtifactName: SampleAppYaml
+    publishLocation: Container
+
